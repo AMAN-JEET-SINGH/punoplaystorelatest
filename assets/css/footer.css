@@ -1,0 +1,197 @@
+.site-footer {
+  background: #000;
+  color: #aaa;
+  border-top: 1px solid #111;
+  font-size: 14px;
+}
+
+.footer-top-logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+}
+
+.footer-top-logo img {
+  width: 220px; /* desktop default */
+  max-width: 90%;
+  height: auto;
+  display: block;
+}
+
+/* Remove old left logo spacing */
+.footer-left .footer-logo {
+  display: none;
+}
+
+/* ================= CONTAINER ================= */
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 10px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 0.8fr;
+  gap: 60px;
+}
+
+/* ================= LOGO ================= */
+.footer-logo img {
+  height: 40px;
+  margin-bottom: 20px;
+}
+
+/* ================= HEADINGS ================= */
+.footer-col h3 {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* ================= TEXT ================= */
+.footer-left p {
+  line-height: 1.8;
+  color: #888;
+}
+
+/* ================= LISTS ================= */
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-col ul li {
+  margin-bottom: 10px;
+  color: #888;
+  line-height: 1.7;
+}
+
+/* Blue bullet style */
+.footer-col ul li::before {
+  content: "•";
+  color: #00aaff;
+  margin-right: 8px;
+}
+
+/* ================= LINKS ================= */
+.footer-right a {
+  color: #aaa;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-right a:hover {
+  color: #00aaff;
+}
+
+/* ================= BOTTOM STRIP ================= */
+.footer-bottom {
+  text-align: center;
+  padding: 18px;
+  border-top: 2px solid #989898;
+  color: #777;
+  font-size: 13px;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 1024px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .footer-top-logo img {
+    width: 180px;
+  }
+
+  .footer-left p {
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .footer-col ul li::before {
+    display: none;
+  }
+}
+
+/* ================= MOBILE FIX ================= */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    text-align: left;
+  }
+
+  .footer-top-logo {
+    padding: 30px 0 5px;
+  }
+
+  .footer-top-logo img {
+    width: 140px;
+  }
+
+  /* Logo center */
+  .footer-logo {
+    text-align: center;
+  }
+
+  .footer-logo img {
+    margin: 0 auto 20px;
+    display: block;
+  }
+
+  /* Description left */
+  .footer-left p {
+    text-align: left;
+  }
+
+  /* Disclaimer heading center */
+  .footer-center h3 {
+    text-align: center;
+  }
+
+  /* Disclaimer list left */
+  .footer-center ul {
+    text-align: left;
+  }
+
+  .footer-center ul li {
+    padding-left: 0;
+  }
+
+  .footer-right h3 {
+    text-align: center;
+  }
+
+  /* About links left */
+  .footer-right ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px 20px;
+    text-align: left;
+  }
+
+  .footer-right ul li {
+    margin-bottom: 0;
+  }
+
+  /* Disclaimer bullets */
+  .footer-center ul li::before,
+  .footer-right ul li::before {
+    content: "•";
+    color: #00aaff;
+    margin-right: 8px;
+    display: inline-block;
+  }
+
+  .footer-center ul li,
+  .footer-right ul li {
+    position: relative;
+    padding-left: 14px;
+  }
+}
+

@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en" style="scroll-behavior: smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Free Html5 Games, Free Online Games - Puno PlayStore.Games</title>
+    <meta
+      name="description"
+      content="Puno PlayStore.Games has a large collection of free online games."
+    />
+
+    <!-- Your existing CSS in /assets/css -->
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/index.css" />
+    <link rel="stylesheet" href="/assets/css/footer.css" />
+
+    <script
+      defer
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+    ></script>
+  </head>
+
+  <body aria-hidden="false">
+    <div class="game-home-layout">
+      <div class="game-list-2" id="gameList">__GAME_CARDS__</div>
+    </div>
+
+    <!-- FOOTER (simplified) -->
+    <footer class="site-footer">
+      <!-- TOP CENTER LOGO -->
+      <div class="footer-top-logo">
+        <img src="/assets/img/logo.webp" alt="PunoPlayStore Logo" />
+      </div>
+
+      <div class="footer-container">
+        <!-- LEFT COLUMN -->
+        <div class="footer-col footer-left">
+          <h3>ABOUT PunoPlayStore</h3>
+
+          <p>
+            PunoPlayStore is an independent gaming and informational website. We are not
+            affiliated with, endorsed by, or officially connected to Google
+            Play, Apple App Store, or any game developer unless explicitly
+            stated.
+          </p>
+          <p>
+            We provide browser-based HTML5 (H5) games that users can play
+            directly on our website without installation. Some pages may include
+            links to official app store listings for informational and
+            convenience purposes only.
+          </p>
+        </div>
+
+        <!-- CENTER COLUMN -->
+        <div class="footer-col footer-center">
+          <h3>DISCLAIMER</h3>
+          <ul>
+            <li>
+              PunoPlayStore does not host, distribute, or modify APK or IPA files.
+            </li>
+            <li>
+              All app downloads are redirected to official stores or developer
+              websites.
+            </li>
+            <li>
+              All trademarks, logos, and brand names are the property of their
+              respective owners.
+            </li>
+            <li>
+              We do not claim ownership or official partnership with any listed
+              application or developer.
+            </li>
+            <li>External links are provided for user convenience only.</li>
+            <li>
+              If you are a copyright owner and wish to request content removal,
+              please contact us.
+            </li>
+            <li>
+              This website operates independently and complies with Google Ads
+              policies.
+            </li>
+          </ul>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="footer-col footer-right">
+          <h3>Legal Information</h3>
+          <ul>
+            <li><a href="/page/privacy-policy/">Privacy Policy</a></li>
+            <li><a href="/page/terms-of-use/">Terms of Use</a></li>
+            <li><a href="/page/About-Us/">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- BOTTOM BAR -->
+      <div class="footer-bottom">
+        © 2026 PunoPlayStore. Operated by Viyan Infotech. All Rights Reserved.
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        // 1x1 transparent gif placeholder so missing files never show broken images.
+        var EMPTY_GIF =
+          "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+
+        class LazyLoad {
+          constructor() {
+            this.loaded = new WeakSet();
+            this.images = [];
+            this.addImage = null;
+          }
+
+          init(className) {
+            this.images = Array.from(
+              document.getElementsByClassName(className),
+            );
+
+            if ("IntersectionObserver" in window) {
+              var obs = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                      this.load(entry.target);
+                      obs.unobserve(entry.target);
+                    }
+                  });
+                },
+                { rootMargin: "200px" },
+              );
+
+              this.images.forEach((img) => obs.observe(img));
+              this.addImage = (img) => obs.observe(img);
+            } else {
+              this.images.forEach((img) => this.load(img));
+              this.addImage = (img) => this.load(img);
+            }
+
+            return this;
+          }
+
+          load(img) {
+            if (this.loaded.has(img)) return;
+
+            var src = img.dataset.original;
+            if (!src) return;
+
+            img.onerror = () => {
+              img.src = EMPTY_GIF;
+            };
+
+            img.onload = () => img.classList.add("loaded");
+            img.src = src;
+            this.loaded.add(img);
+          }
+        }
+
+        function start() {
+          // Enable lazy loading on existing images (home grid).
+          window.lazyLoader = new LazyLoad().init("lazy-img");
+        }
+
+        if (document.readyState === "loading")
+          document.addEventListener("DOMContentLoaded", start);
+        else start();
+      })();
+    </script>
+  </body>
+</html>
+

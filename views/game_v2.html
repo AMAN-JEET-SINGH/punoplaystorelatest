@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en" style="scroll-behavior: smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>__TITLE__ - Download Free Games</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="__OG_URL__" />
+    <meta property="og:title" content="__TITLE__" />
+    <meta property="og:description" content="Download __TITLE__" />
+    <link rel="stylesheet" href="/assets/css/style.app.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/footer.css" />
+  </head>
+  <body aria-hidden="false">
+    <div class="wrapper" style="height: auto !important">
+      <div class="detail-page" style="height: auto !important">
+        <div class="detail-info" style="height: auto !important">
+          <div class="page-left" style="height: auto !important">
+            <div class="info">
+              <section class="top-carousel">
+                <div class="game-list-3" id="topGamesCarousel"></div>
+              </section>
+
+              <div class="app-header">
+                <div class="app-icon">
+                  <img
+                    src="data:image/gif;base64,R0lGODlhAQABAAAAACw="
+                    class="lazy-img"
+                    data-original="__ICON__"
+                    alt="__TITLE__"
+                  />
+                </div>
+                <div class="app-title">
+                  <div class="title">__TITLE__</div>
+                  <div class="developer">__DEVELOPER__</div>
+                  <div class="score">
+                    <span style="color: #FFAF14; font-weight: 700; letter-spacing: 1px">★★★★★</span>
+                    <span style="margin-left: 8px; color: #666;">__SCORE__</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-grid">
+                <div class="info-card">
+                  <div class="icon">👤</div>
+                  <div class="text">
+                    <span>Developer</span>
+                    <strong>__DEVELOPER__</strong>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <div class="icon">⭐</div>
+                  <div class="text">
+                    <span>Score</span>
+                    <strong>__SCORE__</strong>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <div class="icon">⬇️</div>
+                  <div class="text">
+                    <span>Downloads</span>
+                    <strong>__DOWNLOADS__</strong>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <div class="icon">🛡️</div>
+                  <div class="text">
+                    <span>Age</span>
+                    <strong>__AGE__</strong>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <div class="icon">📦</div>
+                  <div class="text">
+                    <span>Version</span>
+                    <strong>__VERSION__</strong>
+                  </div>
+                </div>
+                <div class="info-card">
+                  <div class="icon">🏷️</div>
+                  <div class="text">
+                    <span>Price</span>
+                    <strong>__PRICE__</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <section class="download">
+              <div>
+                <a href="__DOWNLOAD_HREF__" class="btn-down enable">
+                  <span class="cta">Download</span>
+                </a>
+              </div>
+            </section>
+
+            <section class="screen">
+              <h5>Screenshots</h5>
+              <div class="app-thumbs">
+                <button
+                  class="leftbtn"
+                  id="thumbLeftBtn"
+                  type="button"
+                  aria-label="Scroll screenshots left"
+                ></button>
+                <div class="thumb-slides" id="thumbSlides"></div>
+                <button
+                  class="rightbtn"
+                  id="thumbRightBtn"
+                  type="button"
+                  aria-label="Scroll screenshots right"
+                ></button>
+              </div>
+            </section>
+
+            <section class="review">
+              <h5>Reviews</h5>
+              <div class="entry">
+                <h2>Overview</h2>
+                <p>__OVERVIEW__</p>
+              </div>
+            </section>
+
+            <section>
+              <h5>Similar Games</h5>
+              <div class="game-list" id="similarGamesList"></div>
+            </section>
+          </div>
+
+          <div class="page-right" style="height: auto !important">
+            <section style="height: auto !important">
+              <h5>H5 Online Games</h5>
+              <div class="right-list"></div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var EMPTY_GIF = "data:image/gif;base64,R0lGODlhAQABAAAAACw=";
+
+        class LazyLoad {
+          constructor() {
+            this.loaded = new WeakSet();
+            this.images = [];
+            this.addImage = null;
+          }
+
+          init(className) {
+            this.images = Array.from(
+              document.getElementsByClassName(className),
+            );
+
+            if ("IntersectionObserver" in window) {
+              var obs = new IntersectionObserver(
+                (entries) => {
+                  entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                      this.load(entry.target);
+                      obs.unobserve(entry.target);
+                    }
+                  });
+                },
+                { rootMargin: "200px" },
+              );
+
+              this.images.forEach((img) => obs.observe(img));
+              this.addImage = (img) => obs.observe(img);
+            } else {
+              this.images.forEach((img) => this.load(img));
+              this.addImage = (img) => this.load(img);
+            }
+
+            return this;
+          }
+
+          load(img) {
+            if (this.loaded.has(img)) return;
+
+            var src = img.dataset.original;
+            if (!src) return;
+
+            img.onerror = () => {
+              img.src = EMPTY_GIF;
+            };
+
+            img.onload = () => img.classList.add("loaded");
+            img.src = src;
+            this.loaded.add(img);
+          }
+        }
+
+        function shuffle(arr) {
+          arr = arr.slice();
+          for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var tmp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = tmp;
+          }
+          return arr;
+        }
+
+        function pickRandom(arr, n) {
+          return shuffle(arr).slice(0, n);
+        }
+
+        function createCarouselCard(game) {
+          var a = document.createElement("a");
+          a.className = "game-item";
+          a.href = game.url || "#";
+
+          var wrap = document.createElement("div");
+          wrap.className = "game-icon";
+
+          var img = document.createElement("img");
+          img.className = "lazy-img";
+          img.src = EMPTY_GIF;
+          img.setAttribute("data-original", game.icon);
+
+          wrap.appendChild(img);
+
+          var title = document.createElement("span");
+          title.className = "game-title text-ellipsis-2";
+          title.textContent = game.title || "Game";
+
+          a.appendChild(wrap);
+          a.appendChild(title);
+          return a;
+        }
+
+        function createGameItem(game) {
+          var a = document.createElement("a");
+          a.className = "game-item";
+          a.href = game.url || "#";
+
+          var wrap = document.createElement("div");
+          wrap.className = "game-icon";
+
+          var img = document.createElement("img");
+          img.className = "lazy-img";
+          img.src = EMPTY_GIF;
+          img.setAttribute("data-original", game.icon);
+
+          wrap.appendChild(img);
+
+          var title = document.createElement("span");
+          title.className = "game-title text-ellipsis-2";
+          title.textContent = game.title || "Game";
+
+          a.appendChild(wrap);
+          a.appendChild(title);
+          return a;
+        }
+
+        // Improve carousel scrolling: drag-to-scroll + mouse wheel -> horizontal.
+        function setupTopCarouselScroller() {
+          var el = document.getElementById("topGamesCarousel");
+          if (!el) return;
+          if (el.dataset.scrollerBound === "1") return;
+          el.dataset.scrollerBound = "1";
+
+          var isDown = false;
+          var startX = 0;
+          var startScrollLeft = 0;
+
+          el.addEventListener("pointerdown", function (e) {
+            isDown = true;
+            el.classList.add("is-dragging");
+            el.setPointerCapture(e.pointerId);
+            startX = e.clientX;
+            startScrollLeft = el.scrollLeft;
+          });
+
+          el.addEventListener("pointermove", function (e) {
+            if (!isDown) return;
+            var dx = e.clientX - startX;
+            el.scrollLeft = startScrollLeft - dx;
+          });
+
+          function endDrag() {
+            isDown = false;
+            el.classList.remove("is-dragging");
+          }
+
+          el.addEventListener("pointerup", endDrag);
+          el.addEventListener("pointercancel", endDrag);
+
+          // Convert vertical wheel into horizontal scroll when cursor is over strip.
+          el.addEventListener(
+            "wheel",
+            function (e) {
+              // If user is already scrolling horizontally, don't interfere.
+              if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+              e.preventDefault();
+              el.scrollLeft += e.deltaY;
+            },
+            { passive: false },
+          );
+        }
+
+        async function loadOnlineRightList() {
+          var container = document.querySelector(".right-list");
+          if (!container) return;
+
+          try {
+            var res = await fetch("/assets/css/onlinegames.json");
+            var games = await res.json();
+            var randomGames = pickRandom(games, 20);
+
+            container.innerHTML = "";
+            randomGames.forEach((game) => {
+              var rating = (Math.random() * (4.8 - 4.3) + 4.3).toFixed(1);
+
+              var item = document.createElement("a");
+              item.className = "game-item-column";
+              item.href = game.url || "#";
+
+              item.innerHTML = `
+                <div class="app-icon">
+                  <img class="lazy-img" src="${EMPTY_GIF}" data-original="${game.thumb}" alt="${game.title || ""}">
+                </div>
+                <div class="right-info">
+                  <h2>${game.title || ""}</h2>
+                  <div class="cate">${game.category || ""}</div>
+                  <div class="score">
+                    <span style="color:#FFAF14;font-weight:700;">★</span>
+                    <span style="margin-left:8px;color:#666;">${rating}</span>
+                  </div>
+                </div>
+                <div class="download-icon">
+                  <span style="color:#666;font-size:18px;">›</span>
+                </div>
+              `;
+
+              container.appendChild(item);
+            });
+
+            if (window.lazyLoader && window.lazyLoader.addImage) {
+              container
+                .querySelectorAll("img.lazy-img")
+                .forEach((img) => window.lazyLoader.addImage(img));
+            }
+          } catch (e) {
+            console.error("Online Games load error:", e);
+          }
+        }
+
+        async function loadTopGamesCarousel() {
+          var container = document.getElementById("topGamesCarousel");
+          if (!container) return;
+
+          try {
+            var res = await fetch("/games.json");
+            var games = await res.json();
+            var selected = pickRandom(games, 10);
+
+            container.innerHTML = "";
+            selected.forEach((game) => {
+              var item = createCarouselCard(game);
+              container.appendChild(item);
+
+              if (
+                window.lazyLoader &&
+                window.lazyLoader.addImage
+              ) {
+                var img = item.querySelector("img.lazy-img");
+                if (img) window.lazyLoader.addImage(img);
+              }
+            });
+          } catch (e) {
+            console.error("Top carousel load error:", e);
+          }
+        }
+
+        async function loadSimilarGames() {
+          var listEl = document.getElementById("similarGamesList");
+          if (!listEl) return;
+
+          try {
+            var res = await fetch("/games.json");
+            var games = await res.json();
+            var selected = pickRandom(games, 30);
+
+            listEl.innerHTML = "";
+            selected.forEach((g) => {
+              var item = createGameItem(g);
+              listEl.appendChild(item);
+
+              if (window.lazyLoader && window.lazyLoader.addImage) {
+                var img = item.querySelector("img.lazy-img");
+                if (img) window.lazyLoader.addImage(img);
+              }
+            });
+          } catch (e) {
+            console.error("Similar Games fetch error:", e);
+          }
+        }
+
+        // ---- Screenshots (lazyloaded) ----
+        var thumbContainer = document.getElementById("thumbSlides");
+        if (thumbContainer) {
+          var IMAGE_BASE = "__IMAGE_BASE__";
+          var COUNT_RAW = "__SCREENSHOT_COUNT__";
+          var COUNT = parseInt(COUNT_RAW, 10);
+
+          if (Number.isFinite(COUNT) && COUNT > 0) {
+            for (var i = 0; i < COUNT; i++) {
+              var slide = document.createElement("div");
+              slide.className = "slide";
+
+              var img = document.createElement("img");
+              img.className = "slide-pic lazy-img";
+              img.alt = "Screenshot " + i;
+              img.src = EMPTY_GIF;
+              img.setAttribute(
+                "data-original",
+                IMAGE_BASE + "/screenshot-" + i + ".webp",
+              );
+
+              slide.appendChild(img);
+              thumbContainer.appendChild(slide);
+            }
+          }
+        }
+
+        // Screenshot carousel arrows (scroll left/right).
+        var thumbLeftBtn = document.getElementById("thumbLeftBtn");
+        var thumbRightBtn = document.getElementById("thumbRightBtn");
+        function updateThumbNav() {
+          if (!thumbContainer || !thumbLeftBtn || !thumbRightBtn) return;
+
+          var maxScroll =
+            thumbContainer.scrollWidth - thumbContainer.clientWidth;
+          if (!Number.isFinite(maxScroll) || maxScroll < 0) maxScroll = 0;
+
+          // Use a small tolerance to avoid "almost at the edge" rounding issues.
+          var leftDisabled = thumbContainer.scrollLeft <= 0.5;
+          var rightDisabled = thumbContainer.scrollLeft >= maxScroll - 0.5;
+
+          thumbLeftBtn.disabled = leftDisabled;
+          thumbRightBtn.disabled = rightDisabled;
+        }
+
+        if (thumbContainer && thumbLeftBtn && thumbRightBtn) {
+          updateThumbNav();
+          thumbContainer.addEventListener("scroll", updateThumbNav, { passive: true });
+          // Ensure disabled/enabled state is correct after DOM + CSS layout.
+          requestAnimationFrame(updateThumbNav);
+          window.addEventListener("resize", updateThumbNav);
+
+          var step = Math.max(250, Math.floor(thumbContainer.clientWidth * 0.9));
+          thumbLeftBtn.addEventListener("click", function () {
+            thumbContainer.scrollBy({ left: -step, behavior: "smooth" });
+          });
+          thumbRightBtn.addEventListener("click", function () {
+            thumbContainer.scrollBy({ left: step, behavior: "smooth" });
+          });
+        }
+
+        // Start lazyloader for icon + screenshots present right now.
+        window.lazyLoader = new LazyLoad().init("lazy-img");
+
+        // Load right-side online games (downloads page already does this).
+        loadOnlineRightList();
+
+        // Enable better scrolling UX for the top carousel.
+        setupTopCarouselScroller();
+
+        // Load carousel immediately so it appears right away.
+        loadTopGamesCarousel();
+
+        // Load similar games section.
+        loadSimilarGames();
+      })();
+    </script>
+
+    <footer class="site-footer">
+      <!-- TOP CENTER LOGO -->
+      <div class="footer-top-logo">
+        <img src="/assets/img/logo.webp" alt="PunoPlayStore Logo" />
+      </div>
+
+      <div class="footer-container">
+        <!-- LEFT COLUMN -->
+        <div class="footer-col footer-left">
+          <h3>ABOUT PunoPlayStore</h3>
+
+          <p>
+            PunoPlayStore is an independent gaming and informational website. We are not
+            affiliated with, endorsed by, or officially connected to Google
+            Play, Apple App Store, or any game developer unless explicitly
+            stated.
+          </p>
+          <p>
+            We provide browser-based HTML5 (H5) games that users can play
+            directly on our website without installation. Some pages may include
+            links to official app store listings for informational and
+            convenience purposes only.
+          </p>
+        </div>
+
+        <!-- CENTER COLUMN -->
+        <div class="footer-col footer-center">
+          <h3>DISCLAIMER</h3>
+          <ul>
+            <li>
+              PunoPlayStore does not host, distribute, or modify APK or IPA files.
+            </li>
+            <li>
+              All app downloads are redirected to official stores or developer
+              websites.
+            </li>
+            <li>
+              All trademarks, logos, and brand names are the property of their
+              respective owners.
+            </li>
+            <li>
+              We do not claim ownership or official partnership with any listed
+              application or developer.
+            </li>
+            <li>External links are provided for user convenience only.</li>
+            <li>
+              If you are a copyright owner and wish to request content removal,
+              please contact us.
+            </li>
+            <li>
+              This website operates independently and complies with Google Ads
+              policies.
+            </li>
+          </ul>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="footer-col footer-right">
+          <h3>Legal Information</h3>
+          <ul>
+            <li><a href="/page/privacy-policy/">Privacy Policy</a></li>
+            <li><a href="/page/terms-of-use/">Terms of Use</a></li>
+            <li><a href="/page/About-Us/">About Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- BOTTOM BAR -->
+      <div class="footer-bottom">
+        © 2026 PunoPlayStore. Operated by Viyan Infotech. All Rights Reserved.
+      </div>
+    </footer>
+  </body>
+</html>
+
